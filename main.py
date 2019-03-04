@@ -28,10 +28,14 @@ class Steamlauncher(Wox):
                     gameId = file_entry.name.replace("appmanifest_", "").replace(
                         ".acf", ""
                     )
+                    if gameId == "228980":
+                        continue
                     with open(file_entry.path) as f:
                         for line in f:
-                            if line.find('name') > 0:
-                                gameTitle = line.replace('"', '').replace('name', '').strip()
+                            if line.find("name") > 0:
+                                gameTitle = (
+                                    line.replace('"', "").replace("name", "").strip()
+                                )
                                 break
                     if os.path.isfile("./icon/" + gameId + ".jpg"):
                         gameIcon = "./icon/" + gameId + ".jpg"
@@ -60,23 +64,25 @@ class Steamlauncher(Wox):
         result = []
         gameList = self.gameList
 
-
         for line in gameList:
-            result.append({
-                "Title": line['gameTitle'] + " - ({})".format(line['gameId']),
-                "SubTitle": "Press Enter key to launch '{}'.".format(line['gameTitle']),
-                "IcoPath": line['gameIcon'],
-                "JsonRPCAction": {
-                    "method": "launchGame",
-                    "parameters": [line['gameId']],
-                    "dontHideAfterAction": False
+            result.append(
+                {
+                    "Title": line["gameTitle"] + " - ({})".format(line["gameId"]),
+                    "SubTitle": "Press Enter key to launch '{}'.".format(
+                        line["gameTitle"]
+                    ),
+                    "IcoPath": line["gameIcon"],
+                    "JsonRPCAction": {
+                        "method": "launchGame",
+                        "parameters": [line["gameId"]],
+                        "dontHideAfterAction": False,
+                    },
                 }
-            })
+            )
         return result
 
     def launchGame(self, gameId):
-        webbrowser.open('steam://rungameid/{}'.format(gameId))
-
+        webbrowser.open("steam://rungameid/{}".format(gameId))
 
 
 if __name__ == "__main__":
