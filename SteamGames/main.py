@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 import codecs
+import difflib
 import json
 import os
+import re
 import urllib
 import webbrowser
 
 import requests
-
 from bs4 import BeautifulSoup
+
 from wox import Wox, WoxAPI
 
 
@@ -63,22 +65,26 @@ class Steamlauncher(Wox):
     def query(self, query):
         result = []
         gameList = self.gameList
-
+        q = query.lower()
+        pattern = ".*?".join(q)
+        regex = re.compile(pattern)
         for line in gameList:
-            result.append(
-                {
-                    "Title": line["gameTitle"] + " - ({})".format(line["gameId"]),
-                    "SubTitle": "Press Enter key to launch '{}'.".format(
-                        line["gameTitle"]
-                    ),
-                    "IcoPath": line["gameIcon"],
-                    "JsonRPCAction": {
-                        "method": "launchGame",
-                        "parameters": [line["gameId"]],
-                        "dontHideAfterAction": False,
-                    },
-                }
-            )
+            match = regex.search(line["gameTitle"].lower())
+            if match:
+                result.append(
+                    {
+                        "Title": line["gameTitle"] + " - ({})".format(line["gameId"]),
+                        "SubTitle": "Press Enter key to launch '{}'.".format(
+                            line["gameTitle"]
+                        ),
+                        "IcoPath": line["gameIcon"],
+                        "JsonRPCAction": {
+                            "method": "launchGame",
+                            "parameters": [line["gameId"]],
+                            "dontHideAfterAction": False,
+                        },
+                    }
+                )
         return result
 
     def launchGame(self, gameId):

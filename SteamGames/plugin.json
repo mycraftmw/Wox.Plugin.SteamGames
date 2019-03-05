@@ -4,9 +4,9 @@
   "Name": "SteamGames",
   "Description": "Steam game launcher",
   "Author": "mycraftmw",
-  "Version": "1.0.0",
+  "Version": "1.0.1",
   "Language": "python",
   "Website": "https://www.github.com/mycraftmw",
-  "IcoPath": "Images\\launcher.png",
+  "IcoPath": "icon\\launcher.png",
   "ExecuteFileName": "main.py"
 }
