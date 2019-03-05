@@ -1,0 +1,12 @@
+{
+  "ID": "8e5cdc9a78ef4a7e887e138f1fc04015",
+  "ActionKeyword": "/st",
+  "Name": "SteamGames",
+  "Description": "Steam game launcher",
+  "Author": "mycraftmw",
+  "Version": "1.0.0",
+  "Language": "python",
+  "Website": "https://www.github.com/mycraftmw",
+  "IcoPath": "Images\\launcher.png",
+  "ExecuteFileName": "main.py"
+}
